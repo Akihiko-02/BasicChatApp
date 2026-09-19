@@ -154,3 +154,162 @@ This project was created to understand:
 - Implement private messaging
 - Add online/offline status
 - Add message history
+
+---
+
+# Real-Time Chat Application
+
+**Spring Boot WebSocket、STOMP、SockJS** を使用して開発したシンプルなリアルタイムチャットアプリケーションです。
+
+WebSocket技術を使用して、クライアント間でリアルタイムに通信する方法を実装しています。
+
+## 機能
+
+* リアルタイムメッセージング
+* 複数ユーザーによる同時チャット
+* WebSocket通信
+* STOMPメッセージングプロトコル
+* SockJS対応
+* メッセージのブロードキャスト
+
+## 使用技術
+
+### Backend
+
+* Java
+* Spring Boot
+* Spring WebSocket
+* Spring Messaging
+
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+* Bootstrap
+* SockJS Client
+* STOMP.js
+
+## 仕組み
+
+WebSocketを使用して、クライアントとサーバー間に永続的な接続を確立します。
+
+メッセージの流れ：
+
+```text id="m9s4p2"
+Client
+   |
+   | Send Message
+   |
+STOMP + SockJS
+   |
+   |
+Spring Boot WebSocket Server
+   |
+   |
+Message Broker
+   |
+   |
+Subscribed Clients
+```
+
+ユーザーがメッセージを送信すると、以下の処理が行われます。
+
+1. クライアントが `/app/sendMessage` にメッセージを送信
+2. Spring WebSocket Controllerがメッセージを受信
+3. サーバーが `/topic/messages` にメッセージをブロードキャスト
+4. 接続中のすべてのクライアントがリアルタイムでメッセージを受信
+
+## プロジェクト構成
+
+```text id="g0w4ae"
+src/main/java
+|
+├── config
+|    └── WebSocketConfig.java
+|
+├── controller
+|    └── ChatController.java
+|
+└── model
+     └── ChatMessage.java
+
+
+src/main/resources
+
+├── templates
+|    └── chat.html
+|
+└── static
+```
+
+## WebSocket設定
+
+WebSocket Endpoint:
+
+```text id="5k2c8f"
+/chat
+```
+
+クライアント接続：
+
+```text id="0f2b6j"
+ws://localhost:8080/chat
+```
+
+送信先：
+
+```text id="q3r7sn"
+/app/sendMessage
+```
+
+購読先：
+
+```text id="h7n5vp"
+/topic/messages
+```
+
+## アプリケーションの起動
+
+リポジトリをクローンします。
+
+```bash id="q0r9wd"
+git clone <repository-url>
+```
+
+プロジェクトフォルダへ移動します。
+
+```bash id="z3n4kp"
+cd chat-application
+```
+
+Spring Bootアプリケーションを起動します。
+
+```bash id="a5m8xs"
+./mvnw spring-boot:run
+```
+
+ブラウザで以下のURLを開きます。
+
+```text id="c6v2kt"
+http://localhost:8080/chat
+```
+
+複数のブラウザタブを開くことで、リアルタイムメッセージングをテストできます。
+
+## 学習目的
+
+このプロジェクトを通して、以下の内容を学習しました。
+
+* WebSocket通信
+* STOMPプロトコル
+* SockJSの連携
+* Spring WebSocketの設定
+* リアルタイムメッセージ処理
+
+## 今後の改善
+
+* ユーザー認証の追加
+* チャットメッセージのデータベース保存
+* プライベートメッセージ機能
+* オ
